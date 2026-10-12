@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <template id="f2-bar-template">
+      <style>
+        @font-face {
+          font-family: "Instrument Serif";
+          src: url("../../assets/fonts/InstrumentSerif-Regular.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 400;
+        }
+        @font-face {
+          font-family: "JetBrains Mono";
+          src: url("../../assets/fonts/JetBrainsMono-Variable.woff2") format("woff2");
+          font-weight: 100 800;
+        }
+        #f2-root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #0b0c16;
+        }
+        /* Lens geometry, in frame px. Screenshot px → frame: x = ox + px·k. The lens
+           shows screenshot point (px,py) magnified m× at (cx,cy), clipped to radius r. */
+        #f2-stage {
+          position: absolute;
+          inset: 0;
+          --k: 0.5556;
+          --ox: 0;
+          --oy: 0;
+          --px: 2672;
+          --py: 31;
+          --cx: 1484;
+          --cy: 340;
+          --r: 0;
+          --m: 1;
+        }
+        #f2-stage .shot {
+          position: absolute;
+          left: calc(var(--ox) * 1px);
+          top: calc(var(--oy) * 1px);
+          width: calc(var(--k) * 3456px);
+          max-width: none;
+        }
+        #f2-base {
+          position: absolute;
+          inset: 0;
+        }
+        #f2-lens {
+          position: absolute;
+          inset: 0;
+          clip-path: circle(calc(var(--r) * 1px) at calc(var(--cx) * 1px) calc(var(--cy) * 1px));
+        }
+        #f2-lens .shot {
+          transform-origin: calc(var(--px) * var(--k) * 1px) calc(var(--py) * var(--k) * 1px);
+          transform: translate(calc((var(--cx) - var(--ox) - var(--px) * var(--k)) * 1px),
+              calc((var(--cy) - var(--oy) - var(--py) * var(--k)) * 1px))
+            scale(var(--m));
+        }
+        #f2-rim {
+          position: absolute;
+          left: calc((var(--cx) - var(--r)) * 1px);
+          top: calc((var(--cy) - var(--r)) * 1px);
+          width: calc(var(--r) * 2px);
+          height: calc(var(--r) * 2px);
+          border-radius: 50%;
+          border: 3px solid rgba(221, 247, 255, 0.75);
+          box-shadow: inset 0 0 0 1.5px rgba(130, 251, 156, 0.55), 0 0 60px rgba(130, 251, 156, 0.12),
+            0 18px 60px rgba(0, 0, 0, 0.6);
+        }
+        #f2-rim::after {
+          content: "";
+          position: absolute;
+          left: 12%;
+          top: 8%;
+          width: 30%;
+          height: 16%;
+          border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(221, 247, 255, 0.16), rgba(221, 247, 255, 0));
+          transform: rotate(-30deg);
+        }
+        #f2-leader {
+          position: absolute;
+          left: 1483px;
+          top: 36px;
+          width: 2px;
+          height: 54px;
+          background: rgba(221, 247, 255, 0.6);
+          transform-origin: 50% 0;
+        }
+        #f2-mark,
+        #f2-ping {
+          position: absolute;
+          left: 1466px;
+          top: -1px;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          border: 2px solid #82fb9c;
+        }
+        #f2-cap {
+          position: absolute;
+          left: 130px;
+          top: 330px;
+        }
+        #f2-root .lbl {
+          font-family: "JetBrains Mono", monospace;
+          font-size: 28px;
+          letter-spacing: 0.16em;
+          color: #82fb9c;
+          margin-bottom: 18px;
+        }
+        #f2-root .serif {
+          font-family: "Instrument Serif", serif;
+          font-weight: 400;
+          font-size: 116px;
+          line-height: 1.02;
+          letter-spacing: -0.03em;
+          color: #ddf7ff;
+          text-shadow: 0 2px 30px rgba(11, 12, 22, 0.6);
+        }
+        #f2-root .serif span {
+          display: block;
+        }
+      </style>
+
+      <div data-hf-id="hf-6sf4" id="f2-root" data-composition-id="f2-bar" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-f3qk" id="f2-stage">
+          <div data-hf-id="hf-0sgt" id="f2-base"><img data-hf-id="hf-mght" class="shot" src="../../assets/screens/bar.png" alt=""></div>
+          <div data-hf-id="hf-8pmy" id="f2-lens"><img data-hf-id="hf-2nth" class="shot" src="../../assets/screens/bar.png" alt=""></div>
+          <div data-hf-id="hf-w1c6" id="f2-rim"></div>
+          <div data-hf-id="hf-kdh9" id="f2-leader"></div>
+          <div data-hf-id="hf-30jy" id="f2-ping"></div>
+          <div data-hf-id="hf-2795" id="f2-mark"></div>
+        </div>
+        <div data-hf-id="hf-gpr2" id="f2-cap">
+          <div data-hf-id="hf-eref" class="lbl" id="f2-lbl">T3 LOUPE</div>
+          <div data-hf-id="hf-xxin" class="serif"><span data-hf-id="hf-njtm" id="f2-l1">Every agent.</span><span data-hf-id="hf-mg5n" id="f2-l2">One ring.</span></div>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          const tl = gsap.timeline({ paused: true });
+          const stage = "#f2-stage";
+
+          // The desktop settles in, then recedes (blur + dim) as the lens takes focus.
+          tl.fromTo("#f2-base", { filter: "blur(0px) brightness(0.8)" },
+            { filter: "blur(5px) brightness(0.48)", duration: 1.0, ease: "power2.inOut" }, 1.2);
+
+          // Marker pings the bar item.
+          tl.fromTo("#f2-mark", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.45, ease: "power3.out" }, 1.0);
+          tl.fromTo("#f2-ping", { opacity: 0.8, scale: 1 }, { opacity: 0, scale: 2.4, duration: 0.8, ease: "power2.out" }, 1.15);
+
+          // Leader drops; the loupe opens beneath it and magnifies as it opens.
+          tl.fromTo("#f2-leader", { scaleY: 0 }, { scaleY: 1, duration: 0.35, ease: "power3.out" }, 1.45);
+          tl.fromTo(stage, { "--r": 0, "--m": 1.2 }, { "--r": 250, "--m": 3.4, duration: 0.9, ease: "power3.out" }, 1.7);
+          tl.fromTo("#f2-rim", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.out" }, 1.7);
+
+          // Caption reveals on its beat.
+          tl.fromTo("#f2-lbl", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 2.9);
+          tl.fromTo("#f2-l1", { opacity: 0, y: 40, filter: "blur(8px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8, ease: "power3.out" }, 3.15);
+          tl.fromTo("#f2-l2", { opacity: 0, y: 40, filter: "blur(8px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8, ease: "power3.out" }, 3.75);
+
+          window.__timelines["f2-bar"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

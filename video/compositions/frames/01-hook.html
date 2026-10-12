@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <template id="f1-hook-template">
+      <style>
+        @font-face {
+          font-family: "Instrument Serif";
+          src: url("../../assets/fonts/InstrumentSerif-Regular.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 400;
+        }
+        @font-face {
+          font-family: "Instrument Serif";
+          src: url("../../assets/fonts/InstrumentSerif-Italic.woff2") format("woff2");
+          font-style: italic;
+          font-weight: 400;
+        }
+        #f1-root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: radial-gradient(ellipse 70% 60% at 50% 55%, #111827 0%, #0b0c16 70%);
+        }
+        #f1-root .line {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: "Instrument Serif", serif;
+          font-weight: 400;
+          font-size: 150px;
+          letter-spacing: -0.03em;
+          line-height: 1;
+          color: #ddf7ff;
+        }
+        #f1-root .line .w {
+          display: inline-block;
+          margin: 0 0.12em;
+        }
+        #f1-root .line em {
+          font-style: italic;
+          display: inline-block;
+          margin-left: 0.24em;
+          color: #ddf7ff;
+        }
+      </style>
+
+      <div data-hf-id="hf-nv32" id="f1-root" data-composition-id="f1-hook" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-e7ih" class="line" id="f1-a"><span data-hf-id="hf-e2s0" class="w">Six</span><span data-hf-id="hf-gie6" class="w">agents</span><span data-hf-id="hf-ei0f" class="w">working.</span></div>
+        <div data-hf-id="hf-i5mi" class="line" id="f1-b"><span data-hf-id="hf-m3yx">Two machines.</span></div>
+        <div data-hf-id="hf-m3qj" class="line" id="f1-c"><span data-hf-id="hf-es0x">One is</span><em data-hf-id="hf-br5a" id="f1-wait">waiting on you.</em></div>
+      </div>
+
+      <script>
+        (function () {
+          const tl = gsap.timeline({ paused: true });
+          const A = "#f1-a", B = "#f1-b", C = "#f1-c";
+
+          // Beat 1 — "Six agents working." assembles word by word.
+          tl.set([B, C], { opacity: 0 }, 0);
+          tl.fromTo("#f1-a .w", { opacity: 0, y: 36, filter: "blur(8px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.7, ease: "power3.out", stagger: 0.16 }, 0.15);
+
+          // Seam 1 — forward zoom-through A → B (progressing).
+          tl.to(A, { scale: 1.2, filter: "blur(10px)", duration: 0.2, ease: "power3.in" }, 1.75);
+          tl.to(A, { opacity: 0.15, duration: 0.2, ease: "none" }, 1.75);
+          tl.set(A, { opacity: 0 }, 1.95);
+          tl.fromTo(B, { opacity: 0.15, scale: 0.75, filter: "blur(10px)" },
+            { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.5, ease: "expo.out" }, 1.95);
+
+          // Seam 2 — inverse zoom-through B → C (arriving at the point).
+          tl.to(B, { scale: 0.8, filter: "blur(10px)", duration: 0.2, ease: "power3.in" }, 3.35);
+          tl.to(B, { opacity: 0.15, duration: 0.2, ease: "none" }, 3.35);
+          tl.set(B, { opacity: 0 }, 3.55);
+          tl.fromTo(C, { opacity: 0.15, scale: 1.25, filter: "blur(10px)" },
+            { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.6, ease: "expo.out" }, 3.55);
+
+          // "waiting on you." warms to the signal colour, then the line holds.
+          tl.fromTo("#f1-wait", { color: "#ddf7ff" }, { color: "#82fb9c", duration: 0.7, ease: "power2.inOut" }, 4.35);
+
+          window.__timelines["f1-hook"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

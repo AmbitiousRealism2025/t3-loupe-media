@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <template id="f6-install-template">
+      <style>
+        @font-face {
+          font-family: "Instrument Serif";
+          src: url("../../assets/fonts/InstrumentSerif-Regular.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 400;
+        }
+        @font-face {
+          font-family: "JetBrains Mono";
+          src: url("../../assets/fonts/JetBrainsMono-Variable.woff2") format("woff2");
+          font-weight: 100 800;
+        }
+        #f6-root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: radial-gradient(ellipse 70% 60% at 50% 45%, #111827 0%, #0b0c16 70%);
+        }
+        #f6-content {
+          position: absolute;
+          inset: 0;
+        }
+        #f6-lockup {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 150px;
+          display: flex;
+          gap: 40px;
+          justify-content: center;
+          align-items: center;
+        }
+        #f6-ring {
+          width: 190px;
+          height: 190px;
+          display: block;
+        }
+        #f6-ring path {
+          fill: none;
+          stroke-width: 12;
+          stroke-linecap: round;
+        }
+        #f6-num {
+          font-family: "JetBrains Mono", monospace;
+          font-weight: 700;
+          font-size: 46px;
+          fill: #ddf7ff;
+        }
+        #f6-word {
+          font-family: "JetBrains Mono", monospace;
+          font-weight: 700;
+          font-size: 100px;
+          letter-spacing: -0.01em;
+          color: #ddf7ff;
+          line-height: 1.05;
+        }
+        #f6-tag {
+          font-family: "Instrument Serif", serif;
+          font-weight: 400;
+          font-size: 56px;
+          letter-spacing: -0.02em;
+          color: #8fa6b0;
+        }
+        #f6-term {
+          position: absolute;
+          left: 250px;
+          right: 250px;
+          top: 520px;
+          border: 1.5px solid #26313c;
+          background: #0f111d;
+          border-radius: 14px;
+          padding: 34px 44px;
+          font-family: "JetBrains Mono", monospace;
+          font-size: 34px;
+          line-height: 1.7;
+          color: #ddf7ff;
+        }
+        #f6-term > div {
+          white-space: pre;
+        }
+        #f6-term .pr {
+          color: #82fb9c;
+          margin-right: 16px;
+        }
+        #f6-term .ch {
+          display: none;
+        }
+        #f6-root .caret {
+          display: inline-block;
+          width: 18px;
+          height: 38px;
+          margin-left: 4px;
+          vertical-align: -6px;
+          background: #82fb9c;
+        }
+        #f6-foot {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 820px;
+          text-align: center;
+          font-family: "JetBrains Mono", monospace;
+          font-size: 28px;
+          letter-spacing: 0.16em;
+          color: #8fa6b0;
+        }
+      </style>
+
+      <div data-hf-id="hf-psh6" id="f6-root" data-composition-id="f6-install" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-jt5h" id="f6-content">
+          <div data-hf-id="hf-8hjg" id="f6-lockup">
+            <svg data-hf-id="hf-1auc" id="f6-ring" viewBox="0 0 200 200"><text data-hf-id="hf-m9s7" id="f6-num" x="100" y="116" text-anchor="middle">15</text></svg>
+            <div data-hf-id="hf-yeow">
+              <div data-hf-id="hf-9qsc" id="f6-word">T3 Loupe</div>
+              <div data-hf-id="hf-1799" id="f6-tag">See every agent at a glance.</div>
+            </div>
+          </div>
+          <div data-hf-id="hf-7qj0" id="f6-term">
+            <div data-hf-id="hf-cvjh" id="f6-line1"><span data-hf-id="hf-l70x" class="pr">$</span><span data-hf-id="hf-grxw" class="typed" data-text="git clone https://github.com/AmbitiousRealism2025/t3-loupe"></span><span data-hf-id="hf-i3mj" class="caret" id="f6-caret1"></span></div>
+            <div data-hf-id="hf-gtni" id="f6-line2"><span data-hf-id="hf-hphi" class="pr" id="f6-pr2">$</span><span data-hf-id="hf-ssna" class="typed" data-text="cd t3-loupe && tools/install.sh"></span><span data-hf-id="hf-9fqo" class="caret" id="f6-caret2"></span></div>
+          </div>
+          <div data-hf-id="hf-6qip" id="f6-foot">FOR OMARCHY · T3 CODE</div>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          const tl = gsap.timeline({ paused: true });
+          const NS = "http://www.w3.org/2000/svg";
+
+          // The bar ring, as a mark: 15 threads — 4 need you (signal), 6 working (ink), 5 quiet.
+          const ring = document.getElementById("f6-ring");
+          const groups = [[4, "#82fb9c"], [6, "#ddf7ff"], [5, "#4a5762"]];
+          const n = 15, seg = 360 / n, gap = 5, r = 80, arcs = [];
+          let i = 0;
+          groups.forEach(([count, color]) => {
+            for (let c = 0; c < count; c++, i++) {
+              const a0 = ((-90 + i * seg + gap / 2) * Math.PI) / 180;
+              const a1 = ((-90 + (i + 1) * seg - gap / 2) * Math.PI) / 180;
+              const p = document.createElementNS(NS, "path");
+              p.setAttribute("d", `M${100 + r * Math.cos(a0)} ${100 + r * Math.sin(a0)} A${r} ${r} 0 0 1 ${100 + r * Math.cos(a1)} ${100 + r * Math.sin(a1)}`);
+              p.setAttribute("stroke", color);
+              ring.insertBefore(p, ring.firstChild);
+              arcs.push(p);
+            }
+          });
+          arcs.reverse();
+
+          // Typed lines become one span per character.
+          const lines = gsap.utils.toArray("#f6-term .typed").map((el) => {
+            const text = el.getAttribute("data-text");
+            el.textContent = "";
+            return text.split("").map((ch) => {
+              const s = document.createElement("span");
+              s.className = "ch";
+              s.textContent = ch;
+              el.appendChild(s);
+              return s;
+            });
+          });
+
+          // 1 — the ring draws itself, segment by segment (svg-path-draw).
+          arcs.forEach((p, k) => {
+            const len = p.getTotalLength();
+            p.style.strokeDasharray = `${len}`;
+            tl.fromTo(p, { strokeDashoffset: len }, { strokeDashoffset: 0, duration: 0.4, ease: "power2.out" }, 0.35 + k * 0.045);
+          });
+          tl.fromTo("#f6-num", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power1.out" }, 1.0);
+          tl.fromTo("#f6-word", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.85);
+          tl.fromTo("#f6-tag", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 1.3);
+
+          // 2 — the lockup starts centred and large, then demotes upward to make room.
+          tl.fromTo("#f6-lockup", { y: 220, scale: 1.15 }, { y: 0, scale: 1, duration: 0.8, ease: "power3.inOut" }, 2.35);
+
+          // 3 — a $ chip pops in and stretches into the terminal card.
+          tl.fromTo("#f6-term", { opacity: 0, scale: 0.9, clipPath: "inset(0px 1290px 0px 0px round 14px)" },
+            { opacity: 1, scale: 1, duration: 0.35, ease: "power3.out" }, 2.85);
+          tl.to("#f6-term", { clipPath: "inset(0px 0px 0px 0px round 14px)", duration: 0.5, ease: "power3.inOut" }, 3.15);
+
+          // 4 — both commands type out behind a caret.
+          tl.set("#f6-caret2", { opacity: 0 }, 0);
+          tl.set("#f6-pr2", { opacity: 0 }, 0);
+          lines[0].forEach((ch, k) => tl.set(ch, { display: "inline" }, 3.6 + k * 0.016));
+          const t2 = 3.6 + lines[0].length * 0.016 + 0.25;
+          tl.set("#f6-caret1", { opacity: 0 }, t2);
+          tl.set(["#f6-pr2", "#f6-caret2"], { opacity: 1 }, t2);
+          lines[1].forEach((ch, k) => tl.set(ch, { display: "inline" }, t2 + 0.1 + k * 0.02));
+          const done = t2 + 0.1 + lines[1].length * 0.02;
+
+          // Footer, then the caret blinks a few times while the card holds.
+          tl.fromTo("#f6-foot", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power1.out" }, done + 0.1);
+          for (let t = done + 0.45, on = false; t < 6.4; t += 0.45, on = !on) tl.set("#f6-caret2", { opacity: on ? 1 : 0 }, t);
+
+          // Final frame only: fade to ground with the music tail.
+          tl.to("#f6-content", { opacity: 0, duration: 0.55, ease: "power2.in" }, 6.45);
+
+          window.__timelines["f6-install"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

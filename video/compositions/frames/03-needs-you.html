@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <template id="f3-needs-template">
+      <style>
+        @font-face {
+          font-family: "Instrument Serif";
+          src: url("../../assets/fonts/InstrumentSerif-Regular.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 400;
+        }
+        @font-face {
+          font-family: "JetBrains Mono";
+          src: url("../../assets/fonts/JetBrainsMono-Variable.woff2") format("woff2");
+          font-weight: 100 800;
+        }
+        #f3-root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #0b0c16;
+        }
+        /* Lens geometry in frame px (see 02-bar.html). The lens always sits over its own
+           target here: cx = ox + px·k, cy = oy + py·k. */
+        #f3-stage {
+          position: absolute;
+          inset: 0;
+          --k: 0.85;
+          --ox: -503;
+          --oy: -176;
+          --px: 994;
+          --py: 657;
+          --cx: 342;
+          --cy: 382;
+          --r: 0;
+          --m: 1;
+        }
+        #f3-stage .shot {
+          position: absolute;
+          left: calc(var(--ox) * 1px);
+          top: calc(var(--oy) * 1px);
+          width: calc(var(--k) * 3456px);
+          max-width: none;
+        }
+        #f3-base {
+          position: absolute;
+          inset: 0;
+        }
+        #f3-lens {
+          position: absolute;
+          inset: 0;
+          clip-path: circle(calc(var(--r) * 1px) at calc(var(--cx) * 1px) calc(var(--cy) * 1px));
+        }
+        #f3-lens .shot {
+          transform-origin: calc(var(--px) * var(--k) * 1px) calc(var(--py) * var(--k) * 1px);
+          transform: translate(calc((var(--cx) - var(--ox) - var(--px) * var(--k)) * 1px),
+              calc((var(--cy) - var(--oy) - var(--py) * var(--k)) * 1px))
+            scale(var(--m));
+        }
+        #f3-rim {
+          position: absolute;
+          left: calc((var(--cx) - var(--r)) * 1px);
+          top: calc((var(--cy) - var(--r)) * 1px);
+          width: calc(var(--r) * 2px);
+          height: calc(var(--r) * 2px);
+          border-radius: 50%;
+          border: 3px solid rgba(221, 247, 255, 0.75);
+          box-shadow: inset 0 0 0 1.5px rgba(130, 251, 156, 0.55), 0 0 60px rgba(130, 251, 156, 0.12),
+            0 18px 60px rgba(0, 0, 0, 0.6);
+        }
+        #f3-rim::after {
+          content: "";
+          position: absolute;
+          left: 12%;
+          top: 8%;
+          width: 30%;
+          height: 16%;
+          border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(221, 247, 255, 0.16), rgba(221, 247, 255, 0));
+          transform: rotate(-30deg);
+        }
+        #f3-scrim {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to top, rgba(11, 12, 22, 0.94) 0%, rgba(11, 12, 22, 0.6) 26%, rgba(11, 12, 22, 0) 46%);
+        }
+        #f3-cap {
+          position: absolute;
+          left: 110px;
+          top: 700px;
+          width: 760px;
+        }
+        #f3-root .lbl {
+          font-family: "JetBrains Mono", monospace;
+          font-size: 28px;
+          letter-spacing: 0.16em;
+          color: #82fb9c;
+          margin-bottom: 16px;
+        }
+        #f3-root .lines {
+          position: relative;
+          height: 176px;
+        }
+        #f3-root .serif {
+          position: absolute;
+          left: 0;
+          top: 0;
+          font-family: "Instrument Serif", serif;
+          font-weight: 400;
+          font-size: 86px;
+          line-height: 1.02;
+          letter-spacing: -0.03em;
+          color: #ddf7ff;
+        }
+        #f3-root .serif > span {
+          display: block;
+        }
+        #f3-root .serif .w {
+          display: inline-block;
+          margin-right: 0.22em;
+        }
+        #f3-foot {
+          font-family: "JetBrains Mono", monospace;
+          font-size: 26px;
+          color: #8fa6b0;
+          margin-top: 22px;
+        }
+        #f3-root .key {
+          display: inline-block;
+          border: 1.5px solid #4a5762;
+          border-radius: 6px;
+          padding: 0 10px;
+          color: #ddf7ff;
+        }
+      </style>
+
+      <div data-hf-id="hf-wxh6" id="f3-root" data-composition-id="f3-needs" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-8zlt" id="f3-stage">
+          <div data-hf-id="hf-aswu" id="f3-base"><img data-hf-id="hf-bj11" class="shot" src="../../assets/screens/approval.png" alt=""></div>
+          <div data-hf-id="hf-lpqd" id="f3-lens"><img data-hf-id="hf-1gsp" class="shot" src="../../assets/screens/approval.png" alt=""></div>
+          <div data-hf-id="hf-tft3" id="f3-rim"></div>
+        </div>
+        <div data-hf-id="hf-nz9d" id="f3-scrim"></div>
+        <div data-hf-id="hf-493r" id="f3-cap">
+          <div data-hf-id="hf-8f0m" class="lbl" id="f3-lbl">NEEDS YOU</div>
+          <div data-hf-id="hf-qvs1" class="lines">
+            <div data-hf-id="hf-dcll" class="serif" id="f3-c1">
+              <span data-hf-id="hf-uckh"><span data-hf-id="hf-rx3y" class="w">What’s</span><span data-hf-id="hf-ig9s" class="w">blocked</span></span><span data-hf-id="hf-l73p"><span data-hf-id="hf-7dih" class="w">comes</span><span data-hf-id="hf-dorc" class="w">first.</span></span>
+            </div>
+            <div data-hf-id="hf-hapm" class="serif" id="f3-c2">
+              <span data-hf-id="hf-me0s"><span data-hf-id="hf-ys6r" class="w">The</span><span data-hf-id="hf-apxf" class="w">exact</span><span data-hf-id="hf-l9g1" class="w">command</span></span><span data-hf-id="hf-lzpr"><span data-hf-id="hf-tpbp" class="w">it’s</span><span data-hf-id="hf-ouwn" class="w">waiting</span><span data-hf-id="hf-gu4d" class="w">on.</span></span>
+            </div>
+          </div>
+          <div data-hf-id="hf-ztc1" id="f3-foot">Read-only · answer in T3 with <span data-hf-id="hf-bji7" class="key">o</span></div>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          const tl = gsap.timeline({ paused: true });
+          const stage = "#f3-stage";
+          const c1 = gsap.utils.toArray("#f3-c1 .w");
+          const c2 = gsap.utils.toArray("#f3-c2 .w");
+
+          // Waterfall cut helpers (cut-catalog.md §4): words rip left, the next line cascades in.
+          function waterfallIn(words, t, from) {
+            let gap = 0.05, at = t;
+            words.forEach((w) => {
+              tl.fromTo(w, { x: 230, opacity: from }, { x: 0, opacity: 1, duration: 0.3, ease: "power4.out", immediateRender: false }, at);
+              at += gap;
+              gap *= 0.84;
+            });
+          }
+          function waterfallOut(words, t) {
+            words.forEach((w, i) => {
+              tl.to(w, { x: -230, duration: 0.34, ease: "power4.in" }, t + i * 0.022);
+              tl.to(w, { opacity: 0, duration: 0.18, ease: "power1.in" }, t + i * 0.022);
+            });
+            return t + (words.length - 1) * 0.022 + 0.18;
+          }
+          gsap.set([...c1, ...c2], { opacity: 0, x: 230 });
+          gsap.set("#f3-rim", { opacity: 0 });
+
+          // The window recedes (blur + dim) as the lens takes focus — depth-of-field pull.
+          tl.fromTo("#f3-base", { filter: "blur(0px) brightness(0.85) saturate(1)" },
+            { filter: "blur(10px) brightness(0.4) saturate(0.8)", duration: 0.9, ease: "power2.inOut" }, 0.55);
+
+          // Stop 1 — the Needs-you list.
+          tl.fromTo(stage, { "--r": 0, "--m": 1 }, { "--r": 300, "--m": 1.25, duration: 0.9, ease: "power3.out" }, 0.75);
+          tl.fromTo("#f3-rim", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.out" }, 0.75);
+          tl.fromTo("#f3-lbl", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 1.35);
+          waterfallIn(c1, 1.5, 0);
+
+          // Stop 2 — glide onto the pending command and its options.
+          tl.to(stage, { "--px": 1995, "--py": 916, "--cx": 1193, "--cy": 602, "--r": 350, "--m": 1.35,
+            duration: 1.3, ease: "power3.inOut" }, 4.0);
+          const cut = waterfallOut(c1, 4.35);
+          waterfallIn(c2, cut, 0.35);
+
+          // Read-only footnote, then hold.
+          tl.fromTo("#f3-foot", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 6.4);
+
+          window.__timelines["f3-needs"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

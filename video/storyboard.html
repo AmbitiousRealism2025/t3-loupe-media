@@ -1,0 +1,139 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>T3 Loupe — storyboard v1</title>
+<style>
+@font-face{font-family:"Instrument Serif";src:url(assets/fonts/InstrumentSerif-Regular.woff2) format("woff2");font-style:normal}
+@font-face{font-family:"Instrument Serif";src:url(assets/fonts/InstrumentSerif-Italic.woff2) format("woff2");font-style:italic}
+@font-face{font-family:"JetBrains Mono";src:url(assets/fonts/JetBrainsMono-Variable.woff2) format("woff2");font-weight:100 800}
+:root{--ground:#0B0C16;--ink:#DDF7FF;--dim:#8FA6B0;--faint:#4A5762;--sig:#82FB9C}
+*{box-sizing:border-box;margin:0}
+body{background:#07080F;color:var(--ink);font-family:"JetBrains Mono",monospace;padding:48px 56px 80px}
+header{display:flex;align-items:baseline;gap:24px;margin-bottom:8px}
+h1{font-family:"Instrument Serif";font-weight:400;font-size:56px;letter-spacing:-.02em}
+h1 small{font-family:"JetBrains Mono";font-size:16px;color:var(--sig);letter-spacing:.14em;margin-left:12px;vertical-align:middle}
+.dek{color:var(--dim);font-size:15px;margin-bottom:6px}
+.tag{display:inline-block;border:1px solid var(--faint);color:var(--dim);font-size:13px;padding:4px 10px;border-radius:6px;margin-bottom:28px;letter-spacing:.08em}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px 28px}
+.act{grid-column:1/-1;font-size:12px;letter-spacing:.2em;color:var(--faint);border-bottom:1px solid #1C2230;padding-bottom:6px}
+figure{margin:0}
+.cell{aspect-ratio:16/9;container-type:inline-size;position:relative;overflow:hidden;background:var(--ground);border-radius:6px;outline:1px solid #1C2230}
+figcaption{padding-top:10px;font-size:12.5px;line-height:1.5;color:var(--dim)}
+figcaption b{color:var(--ink);font-weight:600}
+.lab{display:flex;justify-content:space-between;color:var(--ink);font-size:12px;letter-spacing:.12em;margin-bottom:4px}
+.lab span:last-child{color:var(--faint)}
+.chip{display:inline-block;margin-top:6px;border:1px solid var(--faint);border-radius:5px;padding:1px 8px;font-size:11px;color:var(--dim)}
+/* frame units: 1 = 1px at 1920 wide */
+.shot{position:absolute;left:calc(var(--ox)*1cqw/19.2);top:calc(var(--oy)*1cqw/19.2);width:calc(3456*var(--k)*1cqw/19.2);max-width:none}
+.shot.dim{filter:blur(calc(4cqw/19.2)) brightness(.5)}
+.shot.blur{filter:blur(calc(10cqw/19.2)) brightness(.4) saturate(.8)}
+.shot.soft{filter:brightness(.9)}
+.lens{position:absolute;inset:0;clip-path:circle(calc(var(--r)*1cqw/19.2) at calc(var(--cx)*1cqw/19.2) calc(var(--cy)*1cqw/19.2))}
+.lens .shot{transform-origin:calc(var(--px)*var(--k)*1cqw/19.2) calc(var(--py)*var(--k)*1cqw/19.2);
+  transform:translate(calc((var(--cx) - var(--ox) - var(--px)*var(--k))*1cqw/19.2),calc((var(--cy) - var(--oy) - var(--py)*var(--k))*1cqw/19.2)) scale(var(--m))}
+.rim{position:absolute;left:calc((var(--cx) - var(--r))*1cqw/19.2);top:calc((var(--cy) - var(--r))*1cqw/19.2);width:calc(var(--r)*2cqw/19.2);height:calc(var(--r)*2cqw/19.2);border-radius:50%;
+  border:calc(3cqw/19.2) solid rgba(221,247,255,.75);box-shadow:inset 0 0 0 calc(1.5cqw/19.2) rgba(130,251,156,.55),0 0 calc(60cqw/19.2) rgba(130,251,156,.12),0 calc(18cqw/19.2) calc(60cqw/19.2) rgba(0,0,0,.6)}
+.rim::after{content:"";position:absolute;left:12%;top:8%;width:30%;height:16%;border-radius:50%;background:radial-gradient(closest-side,rgba(221,247,255,.18),transparent);transform:rotate(-30deg)}
+.leader{position:absolute;left:calc(var(--x)*1cqw/19.2);top:calc(var(--y1)*1cqw/19.2);height:calc((var(--y2) - var(--y1))*1cqw/19.2);border-left:calc(2cqw/19.2) solid rgba(221,247,255,.6)}
+.mark{position:absolute;left:calc((var(--x) - 16)*1cqw/19.2);top:calc((var(--y) - 16)*1cqw/19.2);width:calc(32cqw/19.2);height:calc(32cqw/19.2);border-radius:50%;border:calc(2cqw/19.2) solid var(--sig)}
+.scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(11,12,22,.92) 0%,rgba(11,12,22,.6) 22%,transparent 42%)}
+.scrim.left{background:linear-gradient(to right,rgba(11,12,22,.75) 0%,rgba(11,12,22,.35) 30%,transparent 48%)}
+.cap{position:absolute;left:calc(var(--x)*1cqw/19.2);top:calc(var(--y)*1cqw/19.2)}
+.serif{font-family:"Instrument Serif";font-weight:400;letter-spacing:-.03em;line-height:1.02;color:var(--ink)}
+.serif span{display:block}
+.serif.xl{font-size:calc(132cqw/19.2)}
+.serif.l{font-size:calc(112cqw/19.2)}
+.serif.m{font-size:calc(84cqw/19.2)}
+em.sig{color:var(--sig);font-style:italic}
+.mono.lbl{font-size:calc(26cqw/19.2);letter-spacing:.16em;color:var(--sig);margin-bottom:calc(14cqw/19.2)}
+.mono.foot{font-size:calc(26cqw/19.2);color:var(--dim);margin-top:calc(16cqw/19.2)}
+.key{display:inline-block;border:calc(1.5cqw/19.2) solid var(--faint);border-radius:calc(6cqw/19.2);padding:0 calc(10cqw/19.2);color:var(--ink)}
+.mono.chipk{font-size:calc(30cqw/19.2);color:var(--dim);margin-top:calc(30cqw/19.2)}
+.center{position:absolute;inset:0;display:grid;place-items:center}
+.ghost{position:absolute;left:0;right:0;text-align:center;font-family:"Instrument Serif";color:#2A3340;font-size:calc(54cqw/19.2);letter-spacing:-.02em}
+.g1{top:calc(250cqw/19.2)}.g2{top:calc(330cqw/19.2)}
+.lockup{position:absolute;left:0;right:0;top:calc(170cqw/19.2);display:flex;gap:calc(40cqw/19.2);justify-content:center;align-items:center}
+.ring{width:calc(190cqw/19.2);height:calc(190cqw/19.2)}
+.ringnum{font-family:"JetBrains Mono";font-weight:700;font-size:44px;fill:var(--ink)}
+.mono.word{font-weight:700;font-size:calc(96cqw/19.2);letter-spacing:-.01em}
+.lockup .serif{font-size:calc(52cqw/19.2);color:var(--dim)}
+.term{position:absolute;left:calc(250cqw/19.2);right:calc(250cqw/19.2);top:calc(520cqw/19.2);border:calc(1.5cqw/19.2) solid #26313C;background:#0F111D;border-radius:calc(14cqw/19.2);padding:calc(34cqw/19.2) calc(44cqw/19.2);font-size:calc(34cqw/19.2);line-height:1.7}
+.term .pr{color:var(--sig);margin-right:calc(16cqw/19.2)}
+.caret{display:inline-block;width:calc(18cqw/19.2);height:calc(38cqw/19.2);background:var(--sig);vertical-align:middle;margin-left:calc(6cqw/19.2)}
+.mono.foot2{position:absolute;left:0;right:0;top:calc(820cqw/19.2);text-align:center;font-size:calc(26cqw/19.2);letter-spacing:.16em;color:var(--dim)}
+.meta .in{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:5cqw;gap:2.2cqw;font-size:3cqw}
+.sms{display:flex;gap:1cqw;flex-wrap:wrap}
+.sm{flex:1;border:1px solid #26313C;border-radius:1cqw;padding:1.4cqw;display:flex;flex-direction:column;gap:.6cqw;color:var(--dim);font-size:2.8cqw}
+.sm b{color:var(--ink)}
+.sw{display:flex;gap:1.6cqw;align-items:center;color:var(--dim)} .sw i{width:4cqw;height:4cqw;border-radius:.8cqw;display:inline-block;outline:1px solid #26313C}
+</style></head><body>
+<header><h1>T3 Loupe — promo<small>STORYBOARD v1</small></h1></header>
+<p class="dek">Every T3 Code agent, on every machine, in one glance — the detail you need surfaces the moment you look.</p>
+<span class="tag">1920×1080 · 45s · 6 FRAMES · NO VO · MUSIC BED · LAYOUT SKETCHES, NO MOTION</span>
+<div class="grid">
+<div class="act">ACT I — THE PROBLEM & THE PRODUCT</div>
+<figure class="frame">
+<div class="cell" id="frame-01">
+<div class="ghost g1">Six agents working.</div><div class="ghost g2">Two machines.</div>
+<div class="center"><div class="serif xl">One is <em class="sig">waiting on you.</em></div></div></div>
+<figcaption><div class="lab"><span>01 · HOOK</span><span>01-hook · 0–6s</span></div>
+<p><b>Three lines, one at a time.</b> “Six agents working.” → “Two machines.” → “One is waiting on you.” Each swaps through a short zoom-through; the last arrives and holds. (Faint lines show the earlier beats.)</p><span class="chip">in: cut</span></figcaption></figure><figure class="frame">
+<div class="cell" id="frame-02"><img class="shot dim" src="assets/screens/bar.png" style="--k:0.5556;--ox:0;--oy:0" alt=""><div class="lens" style="--k:0.5556;--ox:0;--oy:0;--px:2672;--py:31;--cx:1470;--cy:340;--r:250;--m:3.4"><img class="shot" src="assets/screens/bar.png" alt=""></div>
+<div class="rim" style="--k:0.5556;--ox:0;--oy:0;--px:2672;--py:31;--cx:1470;--cy:340;--r:250;--m:3.4"></div>
+<div class="leader" style="--x:1484;--y1:30;--y2:90"></div><div class="mark" style="--x:1484;--y:17"></div>
+<div class="cap" style="--x:130;--y:330"><div class="mono lbl">T3 LOUPE</div><div class="serif l"><span>Every agent.</span><span>One ring.</span></div></div></div>
+<figcaption><div class="lab"><span>02 · IN YOUR BAR</span><span>02-bar · 6–12s</span></div>
+<p><b>The desktop, dimmed; the loupe drops from the bar.</b> A marker pings the bar item, the lens opens beneath it with the word, the ring and the “4 need you” badge large and sharp. Caption reveals left of the sun.</p><span class="chip">in: blur-crossfade</span></figcaption></figure><figure class="frame">
+<div class="cell" id="frame-03"><img class="shot blur" src="assets/screens/approval.png" style="--k:0.85;--ox:-503;--oy:-176" alt=""><div class="lens" style="--k:0.85;--ox:-503;--oy:-176;--px:1995;--py:916;--cx:1193;--cy:602;--r:350;--m:1.35"><img class="shot" src="assets/screens/approval.png" alt=""></div>
+<div class="rim" style="--k:0.85;--ox:-503;--oy:-176;--px:1995;--py:916;--cx:1193;--cy:602;--r:350;--m:1.35"></div>
+<div class="scrim"></div>
+<div class="cap" style="--x:110;--y:720"><div class="mono lbl">NEEDS YOU</div><div class="serif m"><span>The exact command</span><span>it’s waiting on.</span></div>
+<div class="mono foot">Read-only · answer in T3 with <span class="key">o</span></div></div></div>
+<figcaption><div class="lab"><span>03 · WHAT NEEDS YOU</span><span>03-needs-you · 12–21s</span></div>
+<p><b>Lens glides from the Needs-you list to the approval.</b> First stop: the four rows that need you (caption “What’s blocked comes first.”). Shown here: second stop on the pending command and its Allow / Decline options.</p><span class="chip">in: zoom-through</span></figcaption></figure>
+<div class="act">ACT II — THE LENS TOUR · ACT III — THE ASK</div>
+<figure class="frame">
+<div class="cell" id="frame-04"><img class="shot blur" src="assets/screens/hero.png" style="--k:0.85;--ox:-503;--oy:-176" alt=""><div class="lens" style="--k:0.85;--ox:-503;--oy:-176;--px:2205;--py:657;--cx:1371;--cy:382;--r:340;--m:1.35"><img class="shot" src="assets/screens/hero.png" alt=""></div>
+<div class="rim" style="--k:0.85;--ox:-503;--oy:-176;--px:2205;--py:657;--cx:1371;--cy:382;--r:340;--m:1.35"></div>
+<div class="scrim"></div>
+<div class="cap" style="--x:110;--y:800"><div class="mono lbl">DETAIL</div><div class="serif m">Context, cost, PRs, subagents.</div></div></div>
+<figcaption><div class="lab"><span>04 · WHAT IT'S DOING</span><span>04-detail · 21–31s</span></div>
+<p><b>Same window position as 03, so the cut feels like one camera.</b> Lens tours activity (“Every tool call, live.”) → the facts strip shown here → plan and runs (“Plan and runs, at a glance.”).</p><span class="chip">in: crossfade</span></figcaption></figure><figure class="frame">
+<div class="cell" id="frame-05"><img class="shot soft" src="assets/screens/dropdown.png" style="--k:0.5556;--ox:0;--oy:0" alt="">
+<div class="scrim left"></div>
+<div class="cap" style="--x:120;--y:330"><div class="mono lbl">OMARCHY · HACKERMAN</div><div class="serif l"><span>Every machine.</span><span>Your theme.</span></div>
+<div class="mono chipk"><span class="key">f</span> toggle view</div></div></div>
+<figcaption><div class="lab"><span>05 · EVERY MACHINE</span><span>05-wide · 31–38s</span></div>
+<p><b>The breather.</b> Pull back from the dropdown’s machines row to the whole desktop: sun, wireframe mountains, the compact dropdown under the bar. Caption and key hint settle; nothing else moves.</p><span class="chip">in: blur-crossfade</span></figcaption></figure><figure class="frame">
+<div class="cell" id="frame-06">
+<div class="lockup"><svg viewBox="0 0 200 200" class="ring"><path d="M103.49 20.08 A80 80 0 0 1 129.32 25.57" stroke="#82FB9C" stroke-width="12" fill="none" stroke-linecap="round"/>
+<path d="M135.70 28.41 A80 80 0 0 1 157.06 43.93" stroke="#82FB9C" stroke-width="12" fill="none" stroke-linecap="round"/>
+<path d="M161.73 49.11 A80 80 0 0 1 174.93 71.98" stroke="#82FB9C" stroke-width="12" fill="none" stroke-linecap="round"/>
+<path d="M177.09 78.62 A80 80 0 0 1 179.85 104.88" stroke="#82FB9C" stroke-width="12" fill="none" stroke-linecap="round"/>
+<path d="M179.12 111.82 A80 80 0 0 1 170.96 136.94" stroke="#DDF7FF" stroke-width="12" fill="none" stroke-linecap="round"/>
+<path d="M167.47 142.98 A80 80 0 0 1 149.80 162.61" stroke="#DDF7FF" stroke-width="12" fill="none" stroke-linecap="round"/>
+<path d="M144.15 166.71 A80 80 0 0 1 120.03 177.45" stroke="#DDF7FF" stroke-width="12" fill="none" stroke-linecap="round"/>
+<path d="M113.20 178.90 A80 80 0 0 1 86.80 178.90" stroke="#DDF7FF" stroke-width="12" fill="none" stroke-linecap="round"/>
+<path d="M79.97 177.45 A80 80 0 0 1 55.85 166.71" stroke="#DDF7FF" stroke-width="12" fill="none" stroke-linecap="round"/>
+<path d="M50.20 162.61 A80 80 0 0 1 32.53 142.98" stroke="#DDF7FF" stroke-width="12" fill="none" stroke-linecap="round"/>
+<path d="M29.04 136.94 A80 80 0 0 1 20.88 111.82" stroke="#3A4652" stroke-width="12" fill="none" stroke-linecap="round"/>
+<path d="M20.15 104.88 A80 80 0 0 1 22.91 78.62" stroke="#3A4652" stroke-width="12" fill="none" stroke-linecap="round"/>
+<path d="M25.07 71.98 A80 80 0 0 1 38.27 49.11" stroke="#3A4652" stroke-width="12" fill="none" stroke-linecap="round"/>
+<path d="M42.94 43.93 A80 80 0 0 1 64.30 28.41" stroke="#3A4652" stroke-width="12" fill="none" stroke-linecap="round"/>
+<path d="M70.68 25.57 A80 80 0 0 1 96.51 20.08" stroke="#3A4652" stroke-width="12" fill="none" stroke-linecap="round"/><text x="100" y="114" text-anchor="middle" class="ringnum">15</text></svg>
+<div><div class="mono word">T3 Loupe</div><div class="serif tagline">See every agent at a glance.</div></div></div>
+<div class="term"><div><span class="pr">$</span> git clone https://github.com/AmbitiousRealism2025/t3-loupe</div><div><span class="pr">$</span> cd t3-loupe &amp;&amp; tools/install.sh<span class="caret"></span></div></div>
+<div class="mono foot2">For Omarchy · T3 Code</div></div>
+<figcaption><div class="lab"><span>06 · INSTALL</span><span>06-install · 38–45s</span></div>
+<p><b>The ring draws itself, the wordmark lands, then the lockup demotes upward.</b> A $ chip stretches into the terminal card and the two commands type out. “For Omarchy · T3 Code” fades in; hold, then fade to ground.</p><span class="chip">in: zoom-through</span></figcaption></figure>
+<div class="act">MAP & TOKENS</div>
+<figure class="meta"><div class="cell"><div class="in"><div class="mono" style="color:var(--sig);letter-spacing:.16em;font-size:2.8cqw">SEAM MAP</div><div class="sms"><div class="sm"><b>01</b><span>cut</span></div><div class="sm"><b>02</b><span>blur-crossfade</span></div><div class="sm"><b>03</b><span>zoom-through</span></div><div class="sm"><b>04</b><span>crossfade</span></div><div class="sm"><b>05</b><span>blur-crossfade</span></div><div class="sm"><b>06</b><span>zoom-through</span></div></div>
+<div style="color:var(--dim);font-size:2.8cqw">Frames 3→4 keep the window in the same place, so the crossfade reads as one camera. Only frame 6 exits.</div></div></div>
+<figcaption><div class="lab"><span>SEAMS</span><span>transition_in per frame</span></div></figcaption></figure>
+<figure class="meta"><div class="cell"><div class="in">
+<div class="sw"><i style="background:#0B0C16"></i>ground #0B0C16</div><div class="sw"><i style="background:#DDF7FF"></i>ink #DDF7FF</div><div class="sw"><i style="background:#82FB9C"></i>signal #82FB9C — needs you / working / lens only</div>
+<div><span class="serif" style="font-size:6cqw">Instrument Serif</span> <span style="color:var(--dim)">— statements</span></div><div>JetBrains Mono <span style="color:var(--dim)">— labels, keys, command</span></div></div></div>
+<figcaption><div class="lab"><span>TOKENS</span><span>frame.md</span></div></figcaption></figure>
+<figure class="meta"><div class="cell"><div class="in" style="color:var(--dim);font-size:2.8cqw;gap:1.4cqw">
+<div class="mono" style="color:var(--sig);letter-spacing:.16em">BANS</div>
+<div>· No invented UI, titles or numbers — demo-feed screenshots only</div><div>· No claim Loupe approves or acts (read-only)</div>
+<div>· No bokeh, particles, neon outlines, purple gradients</div><div>· No slideshow front-loading; no floating / breathing</div><div>· Silent-safe: every idea is on-screen text</div></div></div>
+<figcaption><div class="lab"><span>BANS</span><span>video direction</span></div></figcaption></figure>
+</div></body></html>

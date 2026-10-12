@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+    <title>T3 Loupe — promo</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #0b0c16;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #0b0c16;
+      }
+      #root > div[data-composition-src] {
+        position: absolute;
+        inset: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+      T3 Loupe promo — 45s, 1920x1080. Six frames (STORYBOARD.md); each frame is a
+      sub-composition. Seams: the outgoing frame's slot is extended by the transition
+      length and the incoming frame starts on the alternate track, then the handoff
+      is tweened on the frame wrappers below.
+    -->
+    <div data-hf-id="hf-i657" id="root" data-composition-id="main" data-start="0" data-duration="45" data-width="1920" data-height="1080">
+      <!-- 01 hook 0–6 (+0.6 blur-crossfade into 02) -->
+      <div data-hf-id="hf-adbx" id="el-f1" data-composition-id="f1-hook" data-composition-src="compositions/frames/01-hook.html" data-start="0" data-duration="6.6" data-track-index="0" data-width="1920" data-height="1080"></div>
+      <!-- 02 bar 6–12 (+0.45 zoom-through into 03) -->
+      <div data-hf-id="hf-asgy" id="el-f2" data-composition-id="f2-bar" data-composition-src="compositions/frames/02-bar.html" data-start="6" data-duration="6.45" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <!-- 03 needs you 12–21 (+0.6 crossfade into 04) -->
+      <div data-hf-id="hf-8x9j" id="el-f3" data-composition-id="f3-needs" data-composition-src="compositions/frames/03-needs-you.html" data-start="12" data-duration="9.6" data-track-index="0" data-width="1920" data-height="1080"></div>
+      <!-- 04 detail 21–31 (+0.7 blur-crossfade into 05) -->
+      <div data-hf-id="hf-cf0a" id="el-f4" data-composition-id="f4-detail" data-composition-src="compositions/frames/04-detail.html" data-start="21" data-duration="10.7" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <!-- 05 wide 31–38 (+0.45 zoom-through into 06) -->
+      <div data-hf-id="hf-vtmp" id="el-f5" data-composition-id="f5-wide" data-composition-src="compositions/frames/05-wide.html" data-start="31" data-duration="7.45" data-track-index="0" data-width="1920" data-height="1080"></div>
+      <!-- 06 install 38–45 -->
+      <div data-hf-id="hf-3gup" id="el-f6" data-composition-id="f6-install" data-composition-src="compositions/frames/06-install.html" data-start="38" data-duration="7" data-track-index="1" data-width="1920" data-height="1080"></div>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+
+      // 01 → 02 · blur-crossfade (different backgrounds: bare ground → desktop)
+      tl.to("#el-f1", { filter: "blur(10px)", scale: 1.03, opacity: 0, duration: 0.6, ease: "power2.inOut" }, 6);
+      tl.fromTo("#el-f2", { filter: "blur(10px)", scale: 0.97, opacity: 0 },
+        { filter: "blur(0px)", scale: 1, opacity: 1, duration: 0.6, ease: "power2.inOut" }, 6);
+
+      // 02 → 03 · zoom-through (section change: the bar → inside the window)
+      tl.to("#el-f2", { scale: 2.2, opacity: 0, filter: "blur(10px)", duration: 0.45, ease: "power3.in" }, 12);
+      tl.fromTo("#el-f3", { scale: 0.6, opacity: 0, filter: "blur(10px)" },
+        { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.45, ease: "power3.out" }, 12);
+
+      // 03 → 04 · crossfade (same window position and lens: one camera)
+      tl.to("#el-f3", { opacity: 0, duration: 0.6, ease: "power2.inOut" }, 21);
+      tl.fromTo("#el-f4", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.inOut" }, 21);
+
+      // 04 → 05 · blur-crossfade (wind-down into the breather)
+      tl.to("#el-f4", { filter: "blur(10px)", scale: 1.03, opacity: 0, duration: 0.7, ease: "power2.inOut" }, 31);
+      tl.fromTo("#el-f5", { filter: "blur(10px)", scale: 0.97, opacity: 0 },
+        { filter: "blur(0px)", scale: 1, opacity: 1, duration: 0.7, ease: "power2.inOut" }, 31);
+
+      // 05 → 06 · zoom-through (into the ask)
+      tl.to("#el-f5", { scale: 2.2, opacity: 0, filter: "blur(10px)", duration: 0.45, ease: "power3.in" }, 38);
+      tl.fromTo("#el-f6", { scale: 0.6, opacity: 0, filter: "blur(10px)" },
+        { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.45, ease: "power3.out" }, 38);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

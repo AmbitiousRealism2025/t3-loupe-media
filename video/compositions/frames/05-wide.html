@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <template id="f5-wide-template">
+      <style>
+        @font-face {
+          font-family: "Instrument Serif";
+          src: url("../../assets/fonts/InstrumentSerif-Regular.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 400;
+        }
+        @font-face {
+          font-family: "JetBrains Mono";
+          src: url("../../assets/fonts/JetBrainsMono-Variable.woff2") format("woff2");
+          font-weight: 100 800;
+        }
+        #f5-root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #0b0c16;
+        }
+        /* Camera: screenshot px → frame px via x = ox + px·k. Starts tight on the
+           dropdown's machines row, pulls back to the whole desktop. */
+        #f5-stage {
+          position: absolute;
+          inset: 0;
+          --k: 1.2;
+          --ox: -1777;
+          --oy: -16;
+        }
+        #f5-stage .shot {
+          position: absolute;
+          left: calc(var(--ox) * 1px);
+          top: calc(var(--oy) * 1px);
+          width: calc(var(--k) * 3456px);
+          max-width: none;
+          filter: brightness(0.92);
+        }
+        #f5-scrim {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to right, rgba(11, 12, 22, 0.78) 0%, rgba(11, 12, 22, 0.4) 30%, rgba(11, 12, 22, 0) 50%);
+        }
+        #f5-cap {
+          position: absolute;
+          left: 120px;
+          top: 330px;
+        }
+        #f5-root .lbl {
+          font-family: "JetBrains Mono", monospace;
+          font-size: 28px;
+          letter-spacing: 0.16em;
+          color: #82fb9c;
+          margin-bottom: 18px;
+        }
+        #f5-root .serif {
+          font-family: "Instrument Serif", serif;
+          font-weight: 400;
+          font-size: 116px;
+          line-height: 1.02;
+          letter-spacing: -0.03em;
+          color: #ddf7ff;
+          text-shadow: 0 2px 30px rgba(11, 12, 22, 0.55);
+        }
+        #f5-root .serif span {
+          display: block;
+        }
+        #f5-hint {
+          font-family: "JetBrains Mono", monospace;
+          font-size: 30px;
+          color: #ddf7ff;
+          margin-top: 34px;
+        }
+        #f5-root .key {
+          display: inline-block;
+          border: 1.5px solid #8fa6b0;
+          border-radius: 6px;
+          padding: 0 12px;
+          margin-right: 12px;
+          color: #ddf7ff;
+        }
+      </style>
+
+      <div data-hf-id="hf-ksae" id="f5-root" data-composition-id="f5-wide" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-wz3r" id="f5-stage"><img data-hf-id="hf-5dq2" class="shot" data-layout-allow-overflow="" src="../../assets/screens/dropdown.png" alt=""></div>
+        <div data-hf-id="hf-bq8j" id="f5-scrim"></div>
+        <div data-hf-id="hf-eyw1" id="f5-cap">
+          <div data-hf-id="hf-ryke" class="lbl" id="f5-lbl">OMARCHY · HACKERMAN</div>
+          <div data-hf-id="hf-xxin" class="serif"><span data-hf-id="hf-8qnb" id="f5-l1">Every machine.</span><span data-hf-id="hf-2254" id="f5-l2">Your theme.</span></div>
+          <div data-hf-id="hf-r5h9" id="f5-hint"><span data-hf-id="hf-8rd0" class="key">f</span>toggle view</div>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          const tl = gsap.timeline({ paused: true });
+
+          // Pull back from the machines row to the whole desktop (zoom-out-workspace-reveal).
+          tl.to("#f5-stage", { "--k": 0.5556, "--ox": 0, "--oy": 0, duration: 2.6, ease: "power3.inOut" }, 0.3);
+          tl.fromTo("#f5-scrim", { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "power2.out" }, 2.2);
+
+          // Caption settles; then everything holds still — the breather.
+          tl.fromTo("#f5-lbl", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 2.7);
+          tl.fromTo("#f5-l1", { opacity: 0, y: 40, filter: "blur(8px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8, ease: "power3.out" }, 2.95);
+          tl.fromTo("#f5-l2", { opacity: 0, y: 40, filter: "blur(8px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8, ease: "power3.out" }, 3.5);
+          tl.fromTo("#f5-hint", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 4.5);
+
+          window.__timelines["f5-wide"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>
